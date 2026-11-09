@@ -54,5 +54,48 @@ footer p { color:var(--muted); margin:0; max-width:700px; }
 .error { padding:24px; background:#fff0e9; border:1px solid #b56b4d; border-radius:5px; overflow-wrap:anywhere; }
 .error h2 { font-size:20px; margin:0; }
 :focus-visible { outline:3px solid #a74d2c; outline-offset:4px; }
+.skip-link { position:absolute; top:-100px; left:12px; padding:12px; background:white; z-index:5; }
+.skip-link:focus { top:8px; }
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.boundary { border-left:4px solid var(--accent); padding:12px 18px; background:#edf0e8; }
+#excerpt-nav { display:flex; flex-wrap:wrap; gap:12px; margin:24px 0; }
+#excerpt-nav .excerpt-button { display:block; width:auto; flex:1 1 200px; margin:0; }
+.review-workspace { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:24px; margin-top:24px; align-items:start; }
+.review-workspace .source-panel { border-top:1px solid var(--line); border-radius:6px; }
+.analysis-panel { background:#fffefa; border:1px solid var(--line); border-radius:6px; padding:24px; min-width:0; }
+h2 { font:normal 25px/1.3 Georgia,serif; }
+.quote-panel h2 { font-size:20px; }
+.method { font-size:12px; color:#45554b; }
+.display-setting { display:block; font-size:14px; font-weight:bold; margin:18px 0; }
+input[type=checkbox] { width:20px; height:20px; vertical-align:middle; margin-right:8px; }
+#transcript { padding:0; }
+.source-text { line-height:2; }
+.passage { box-decoration-break:clone; -webkit-box-decoration-break:clone; overflow-wrap:anywhere; }
+.passage.kept { background:#d6ebd6; color:#163c24; }
+.passage.omitted { background:#f8e1dd; color:#56271f; }
+.passage-label { font-size:10px; font-weight:bold; padding:0 4px; letter-spacing:.5px; }
+.labels-only .passage { background:transparent; color:inherit; }
+.labels-only .passage-label { border:1px solid currentColor; margin-right:4px; }
+.finding { border-top:2px solid var(--line); margin-top:24px; padding-top:24px; }
+.finding h4 { margin-top:22px; }
+.citation { border-left:3px solid #81998a; padding-left:12px; margin:14px 0; }
+.citation a { color:#235b47; font-weight:bold; font-size:13px; }
+.citation blockquote { font-size:17px; margin:8px 0; }
+.editorial-panel { margin-top:30px; border-top:2px solid var(--line); padding-top:24px; }
+.decision-form { display:grid; gap:9px; margin:18px 0; }
+.decision-form label { font-size:13px; font-weight:bold; }
+select,textarea,button { font:inherit; }
+select,textarea { width:100%; min-width:0; border:1px solid #7d897f; border-radius:4px; padding:10px; color:var(--ink); background:white; }
+textarea { resize:vertical; }
+button { cursor:pointer; border:1px solid var(--accent); border-radius:4px; padding:10px 14px; background:#edf2e9; color:var(--ink); min-height:44px; }
+button:hover { background:#dce7d6; }
+button:disabled { cursor:default; opacity:.65; }
+.save-state,.storage-message { font-size:13px; overflow-wrap:anywhere; }
+.storage-message:empty { display:none; }
+.report-controls { margin-top:32px; padding:24px; border:1px solid var(--line); background:#fffefa; }
+.report-controls button { margin:4px 8px 4px 0; }
+#report-preview { white-space:pre-wrap; overflow-wrap:anywhere; font:14px/1.7 Arial,sans-serif; background:white; padding:24px; border:1px solid var(--line); }
+@media(max-width:1000px) { .review-workspace { grid-template-columns:1fr; } }
+@media(forced-colors:active) { .passage-label { border:1px solid CanvasText; } button,select,textarea,.citation { border-color:CanvasText; } }
 [hidden] { display:none!important; }
 @media(max-width:760px) { main { padding:28px 18px; } .intro>p:last-child { position:static; margin:18px 0 0; font-size:14px; } .fixture-note { align-items:flex-start; flex-direction:column; gap:10px; } .workspace { grid-template-columns:1fr; gap:16px; } .aside-note { margin-bottom:0; } .excerpt-button { padding:12px; } .quote-panel,.source-panel { padding:24px 20px; } blockquote { font-size:24px; } details { margin-left:0; } summary span { display:block; margin-left:16px; } footer { flex-direction:column; gap:6px; } .local { font-size:10px; } .topbar { padding:16px 18px; } }

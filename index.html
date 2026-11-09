@@ -3,22 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Context Cut — source review</title>
+  <title>Context Cut — editorial review</title>
   <link rel="stylesheet" href="/styles.css">
   <script type="module" src="/src/app.js"></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="/">Context Cut<span class="brand-dot">.</span></a><span class="local">Local prototype · Milestone 1</span></header>
+  <a class="skip-link" href="#transcript-heading">Skip to source transcript</a>
+  <header class="topbar"><a class="brand" href="/">Context Cut<span class="brand-dot">.</span></a><span class="local">Local capstone · v0.2.0</span></header>
   <main>
-    <div class="intro"><p class="eyebrow">THE EDIT, IN CONTEXT</p><h1>A short quote.<br>A bigger conversation.</h1><p>Follow an excerpt back to its source.<br>Keep the storyteller’s meaning in view.</p></div>
+    <div class="intro"><p class="eyebrow">THE EDIT, IN CONTEXT</p><h1>A short quote.<br>A bigger conversation.</h1><p>Review the meaning.<br>Record your reasoning.</p></div>
     <div class="fixture-note"><span class="pill">FICTIONAL DEMO</span><p id="fixture-description">Loading the local interview…</p></div>
-    <div id="load-error" role="alert" hidden></div>
-    <div class="workspace">
-      <aside><p class="eyebrow">PROPOSED EXCERPTS <span id="count"></span></p><nav id="excerpt-nav" aria-label="Proposed excerpts"></nav><p class="aside-note">Three authored examples for comparing selections with the original exchange. Case labels are demo notes, not AI findings.</p></aside>
-      <section aria-label="Excerpt source review"><div id="review" aria-live="polite"></div></section>
+    <p id="limits" class="boundary"></p>
+    <div id="load-error" class="error" role="alert" hidden></div>
+    <nav id="excerpt-nav" aria-label="Proposed excerpts"></nav>
+    <div id="announcement" class="sr-only" role="status"></div>
+    <section id="quote" class="quote-panel" aria-label="Active proposed excerpt"></section>
+    <div class="review-workspace">
+      <section class="source-panel" aria-labelledby="transcript-heading">
+        <h2 id="transcript-heading" tabindex="-1">Annotated source transcript</h2>
+        <p id="scope" class="source-help"></p>
+        <label class="display-setting"><input id="labels-only" type="checkbox"> Labels only (no kept / omitted colour)</label>
+        <p class="method">Turn timestamps locate the original exchange, not individual words.</p>
+        <div id="transcript"></div>
+      </section>
+      <section id="analysis" class="analysis-panel" aria-label="Meaning review and editorial decisions"></section>
     </div>
-    <details id="full-transcript"><summary>Read the full source transcript <span>8 turns · 01:24</span></summary><div id="transcript"></div></details>
-    <footer><strong>Your edit. Your judgment.</strong><p>Source review is available. AI-assisted review and saved editorial decisions are planned for the next milestones. No interview text is sent to a model.</p></footer>
+    <section class="report-controls" aria-label="Internal editorial integrity report">
+      <h2>Internal editorial integrity report</h2>
+      <p>Includes saved decisions only. Incomplete reviews can be exported with open concerns identified. Review completion does not certify truthfulness.</p>
+      <button id="preview-report" type="button">Preview saved report</button>
+      <button id="export-report" type="button">Export internal report</button>
+    </section>
+    <section id="report-section" hidden aria-labelledby="report-heading"><h2 id="report-heading" tabindex="-1">Saved report preview</h2><pre id="report-preview"></pre></section>
+    <footer><strong>Your edit. Your judgment.</strong><p>Decisions are stored in this browser, can be cleared, are not encrypted by this app and do not sync. Source/edit import and in-app selection are planned for the next product phase.</p></footer>
   </main>
 </body>
 </html>

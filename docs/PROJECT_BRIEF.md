@@ -68,4 +68,4 @@ Before any live model integration, document the provider and endpoint, exactly w
 
 ## Delivery control
 
-Final submission is due Wednesday 11 November 2026, with an internal target of 18:00 SAST. Protect evidence validation, clear limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first. Unmet criteria must be reported as incomplete. Specification approval and this documentation update do not authorise implementation; coding remains paused until requested.
+Final submission is due Wednesday 11 November 2026, with an internal target of 18:00 SAST. Protect evidence validation, clear limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first. Unmet criteria must be reported as incomplete. Implementation was subsequently authorised by the owner on 9 November 2026. See VERIFICATION.md for implemented checks and remaining verification limits.

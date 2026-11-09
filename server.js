@@ -6,6 +6,9 @@ const files = new Map([
   ['/styles.css', ['styles.css', 'text/css']],
   ['/src/app.js', ['src/app.js', 'text/javascript']],
   ['/src/evidence.js', ['src/evidence.js', 'text/javascript']],
+  ['/src/review.js', ['src/review.js', 'text/javascript']],
+  ['/src/records.js', ['src/records.js', 'text/javascript']],
+  ['/src/report.js', ['src/report.js', 'text/javascript']],
   ['/data/synthetic-interview.json', ['data/synthetic-interview.json', 'application/json']]
 ]);
 const port = Number(process.env.PORT || 3000);

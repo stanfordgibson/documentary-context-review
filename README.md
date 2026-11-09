@@ -1,64 +1,72 @@
 # Context Cut
 
-A local-first source review prototype for documentary filmmakers. Trace a proposed excerpt back to its question and surrounding exchange before making an editorial decision.
+A local editorial review prototype for documentary filmmakers. Review a proposed excerpt against its original interview, inspect potential meaning changes and authentic remedies, and record human reasoning in an internal integrity report.
 
-Andela × OpenAI Codex Accelerator capstone. Working name: Context Cut. Default repository: `documentary-context-review`.
+Andela × OpenAI Codex Accelerator capstone. Submission deadline: Wednesday 11 November 2026, end of day SAST; internal target 18:00 SAST.
 
-## Plan
+## Run
 
-- [Project brief](docs/PROJECT_BRIEF.md)
-- [MVP plan and demo](docs/MVP_PLAN.md)
+Requires Node.js 22 or newer. Application dependencies, credentials, and `npm install` are not required.
 
-Deadline: **Wednesday, 11 November 2026, end of day SAST (UTC+2)**. Internal submission target: 18:00 SAST that day.
-
-This repository starts with a committed plan. Milestone 1 adds source review; AI-assisted review and persistent editorial decisions follow on separate milestones. Only fictional interview data belongs in the demo repository.
-
-## Run the source-review demo
-
-Requires Node.js 22 or newer. No `npm install` is needed.
-
-```bash
-git clone --branch feat/source-review https://github.com/stanfordgibson/documentary-context-review.git
+```sh
+git clone --branch feat/editorial-review https://github.com/stanfordgibson/documentary-context-review.git
 cd documentary-context-review
 npm start
 ```
 
-Open **http://127.0.0.1:3000** in your browser. Stop with Ctrl+C. To change the port: `PORT=3001 npm start` (POSIX shell). The server listens only on loopback and serves an explicit allowlist of app files. It does not expose repository files, local transcripts, or media directories.
+Open http://127.0.0.1:3000. Stop with Ctrl+C. If that port is occupied, use PowerShell `$env:PORT='3075'; npm start`, or POSIX `PORT=3075 npm start`.
 
-Choose any of the three excerpts. The highlighted selection is shown inside its complete source turn, with the question, immediate neighbouring turns, and turn-level timestamps. Open **Read the full source transcript** for all eight turns. Excerpt links survive reload, for example `http://127.0.0.1:3000/?excerpt=free-screenings`.
+The loopback-only server serves an explicit allowlist of app files. Repository documents, local transcripts, environment files and media are not served.
 
-The interview is entirely invented. The demo case labels are authored examples, not automated judgments. AI observations and decision persistence are not implemented in milestone 1. The app makes no model requests, uses no remote assets, and does not accept uploads. Keep real data out of this fixture. `.gitignore` excludes common private-data locations, media, secrets, and local work; check staged changes before every commit.
+## Review workflow
+
+1. Choose one of three predefined excerpts from the entirely fictional Naledi interview.
+2. Read the full source, labelled KEPT/OMITTED for that excerpt. Choose Labels only for a colour-free view. Labels are exposed as text to assistive technology; evidence links move keyboard focus to source turns.
+3. Inspect the authored meaning observation, validated source evidence and authentic restoration passage. The preserved-meaning example shows “No concern flagged”, not approval.
+4. Explicitly resolve or dismiss each material finding with a rationale. Separately choose Keep / Revise / Leave out for the excerpt. No edits are applied or verified.
+5. Save and reopen decisions after reload. Preview or export the readable internal report. Reports use saved decisions only and remain incomplete until all excerpt and finding decisions are recorded.
+
+The report is a plain-text working document. It includes review scope, source/version, exact excerpts, method, evidence, consequences, remedies, decisions and unresolved concerns. Completion records human review; it does not certify truthfulness.
+
+## Boundaries
+
+- All observations are authored and deterministic. No model request, external asset or analytics request occurs. The demo establishes workflow behaviour, not general AI detection accuracy.
+- “Omitted” means excluded from the active excerpt, not absent from the documentary. The three excerpts are separate selections, not one final edit. Context supplied elsewhere may be recorded in a rationale but is not verified.
+- Source/edit import and in-app passage selection both remain in the next product phase. Contradictions, reordered edits and arbitrary transcripts are not assessed.
+- Changed source, excerpt or review identities require reassessment. Unknown evidence and malformed responses cannot become clearance; source remains readable.
+- Decisions use browser localStorage. They can be cleared, are not encrypted by this app and do not sync. Malformed, outdated and unavailable records are visibly identified. Downloaded reports remain on the user's device.
+- Only synthetic data belongs in this repository. Private data, local work, decision exports and report exports are ignored; inspect staged files before committing.
 
 ## Verify
 
-```bash
+```sh
 npm test
 ```
 
-This runs seven Node tests covering the three evidence mappings and rejected missing references, wrong question speakers/order, altered quotations, duplicate IDs, empty selections, and invalid timestamps.
+Thirteen Node tests cover exact evidence, material cases and authentic remedies, full response validation, instruction-like transcript content, independent decisions, malformed/blocked/stale storage, and complete/incomplete reports.
 
-Optional browser verification requires Python 3 and Playwright; application users do not need them. In a separate terminal, with the server running on port 3000:
+Optional browser verification uses Playwright as a development-only tool in ignored `work/browser`; it is not an application dependency:
 
-```bash
-python3 -m venv work/venv
-work/venv/bin/pip install playwright
-PLAYWRIGHT_BROWSERS_PATH="$PWD/work/browsers" work/venv/bin/python -m playwright install chromium
-PLAYWRIGHT_BROWSERS_PATH="$PWD/work/browsers" work/venv/bin/python tests/browser_check.py
+```sh
+npm install --prefix work/browser --no-package-lock --no-save playwright
 ```
 
-The browser check verifies all displayed selections, source lines, questions, timestamps, nearby turn IDs, navigation/reload, the full transcript, 390px layout, failed source resolution and recovery, failed fixture loading, absence of external requests, and server file/method restrictions. Screenshots go to ignored `work/`.
+Start the app separately on port 3075, then run:
 
-## GitHub repository
+```sh
+node tests/browser_check.mjs
+```
+
+The test defaults to installed Windows Chrome and http://127.0.0.1:3075. Set `BROWSER_PATH` to an installed Chromium-based browser executable and `TEST_URL` to the local server URL on other systems. It creates an isolated browser profile; screenshots and downloaded test reports go to ignored `work/`.
+
+The browser suite checks annotations, evidence links, decisions/reload, report download, failure/recovery, stale/blocked storage, keyboard operation, accessibility-tree status, high contrast, enlarged text, responsive layout, no external requests and server restrictions. These checks are not a formal screen-reader or accessibility audit.
+
+## Project records
+
+- [Project brief](docs/PROJECT_BRIEF.md)
+- [Approved plan and acceptance criteria](docs/MVP_PLAN.md)
+- [Verification results and limits](docs/VERIFICATION.md)
 
 Private repository: https://github.com/stanfordgibson/documentary-context-review
 
-Owner and private visibility were verified before pushing. Both branches are available:
-
-- `main`: committed project brief and three-milestone plan baseline.
-- `feat/source-review`: working milestone 1 demo, tests, and current documentation.
-
-The run command above clones the feature branch because the application is not yet merged into main. Existing local checkouts can use `git switch feat/source-review`.
-
-The origin is `https://github.com/stanfordgibson/documentary-context-review.git`. The GitHub connection supports the completed pushes. Repository creation and visibility changes required the owner to use GitHub's website; future administration changes may also require that step. Never paste credentials into chat.
-
-Next: milestone 2 adds evidence-validated deterministic AI observations, including no-concern, insufficient-context, and failure states. See the plan for Wednesday's decision-persistence and submission schedule.
+`main` contains the approved planning baseline. `feat/source-review` preserves Milestone 1 at `470b372`. `feat/editorial-review` includes that source-review implementation, the approved specification and Milestones 2/3. The clone command selects the working implementation branch.
