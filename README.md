@@ -49,40 +49,37 @@ The browser check verifies all displayed selections, source lines, questions, ti
 
 ## Connect a private GitHub repository
 
-GitHub setup was blocked in the build session: `gh auth status` reported an invalid `GH_TOKEN`. No remote repository was created or pushed. Local baseline and milestone commits are preserved.
+GitHub is connected and the authenticated account was verified as `stanfordgibson`. This integration cannot create repositories: both `gh repo create` and the REST create-repository endpoint returned “Resource not accessible by integration”. No repository was created and no commits were pushed.
 
-From this repository, restore authentication on your machine (do not paste credentials into chat). If `GH_TOKEN` is an expired environment override, unset it before using browser login:
+Create the repository using GitHub's website:
+
+1. Open https://github.com/new and choose owner **stanfordgibson**.
+2. Name it **documentary-context-review** and select **Private**.
+3. Leave README, licence, and .gitignore initialization unchecked; the local repository already contains its baseline and source-review commits.
+4. Create the repository, then verify access, owner, and visibility before connecting and pushing:
 
 ```bash
-unset GH_TOKEN
-gh auth login --hostname github.com --web
 gh auth status
-owner=$(gh api user --jq .login) || exit 1
-test -n "$owner" || exit 1
-printf 'Authenticated repository owner: %s\n' "$owner"
+gh repo view stanfordgibson/documentary-context-review --json nameWithOwner,visibility,url
+test "$(gh repo view stanfordgibson/documentary-context-review --json visibility --jq .visibility)" = PRIVATE || exit 1
+test "$(gh repo view stanfordgibson/documentary-context-review --json nameWithOwner --jq .nameWithOwner)" = stanfordgibson/documentary-context-review || exit 1
 git remote -v
 ```
 
-Check that the owner is your intended account and that there is still no intended remote. Then create the private repository (without `--push`):
+If the integration cannot see the new repository, grant it access through the GitHub connection settings. After verifying that no intended origin exists, connect it:
 
 ```bash
-gh repo create "$owner/documentary-context-review" --private --source=. --remote=origin
-gh repo view "$owner/documentary-context-review" --json nameWithOwner,visibility,url
-git remote get-url origin
+git remote add origin https://github.com/stanfordgibson/documentary-context-review.git
 ```
 
-If that repository name already exists, inspect it before connecting; do not overwrite its history. After confirming the displayed owner, private visibility, and origin, the following checks gate both pushes:
+Verify the remote exactly, then push both branches:
 
 ```bash
-test "$(gh repo view "$owner/documentary-context-review" --json visibility --jq .visibility)" = PRIVATE || exit 1
-test "$(gh repo view "$owner/documentary-context-review" --json nameWithOwner --jq .nameWithOwner)" = "$owner/documentary-context-review" || exit 1
-origin=$(git remote get-url origin) || exit 1
-case "$origin" in
-  "https://github.com/$owner/documentary-context-review.git"|"git@github.com:$owner/documentary-context-review.git") ;;
-  *) printf 'Unexpected origin: %s\n' "$origin"; exit 1 ;;
-esac
+test "$(git remote get-url origin)" = https://github.com/stanfordgibson/documentary-context-review.git || exit 1
 git push -u origin main
 git push -u origin feat/source-review
 ```
+
+If the name already exists, inspect its contents before connecting; do not overwrite its history. If pushing is denied, check that the integration has write access to this repository. Do not paste credentials into chat.
 
 Next: milestone 2 adds evidence-validated deterministic AI observations, including no-concern, insufficient-context, and failure states. See the plan for Wednesday's decision-persistence and submission schedule.
