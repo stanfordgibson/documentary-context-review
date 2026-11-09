@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Context Cut — source review</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/app.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/">Context Cut<span class="brand-dot">.</span></a><span class="local">Local prototype · Milestone 1</span></header>
+  <main>
+    <div class="intro"><p class="eyebrow">THE EDIT, IN CONTEXT</p><h1>A short quote.<br>A bigger conversation.</h1><p>Follow an excerpt back to its source.<br>Keep the storyteller’s meaning in view.</p></div>
+    <div class="fixture-note"><span class="pill">FICTIONAL DEMO</span><p id="fixture-description">Loading the local interview…</p></div>
+    <div id="load-error" role="alert" hidden></div>
+    <div class="workspace">
+      <aside><p class="eyebrow">PROPOSED EXCERPTS <span id="count"></span></p><nav id="excerpt-nav" aria-label="Proposed excerpts"></nav><p class="aside-note">Three authored examples for comparing selections with the original exchange. Case labels are demo notes, not AI findings.</p></aside>
+      <section aria-label="Excerpt source review"><div id="review" aria-live="polite"></div></section>
+    </div>
+    <details id="full-transcript"><summary>Read the full source transcript <span>8 turns · 01:24</span></summary><div id="transcript"></div></details>
+    <footer><strong>Your edit. Your judgment.</strong><p>Source review is available. AI-assisted review and saved editorial decisions are planned for the next milestones. No interview text is sent to a model.</p></footer>
+  </main>
+</body>
+</html>
