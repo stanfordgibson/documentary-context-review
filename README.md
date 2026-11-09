@@ -18,6 +18,7 @@ This repository starts with a committed plan. Milestone 1 adds source review; AI
 Requires Node.js 22 or newer. No `npm install` is needed.
 
 ```bash
+git clone --branch feat/source-review https://github.com/stanfordgibson/documentary-context-review.git
 cd documentary-context-review
 npm start
 ```
@@ -47,39 +48,17 @@ PLAYWRIGHT_BROWSERS_PATH="$PWD/work/browsers" work/venv/bin/python tests/browser
 
 The browser check verifies all displayed selections, source lines, questions, timestamps, nearby turn IDs, navigation/reload, the full transcript, 390px layout, failed source resolution and recovery, failed fixture loading, absence of external requests, and server file/method restrictions. Screenshots go to ignored `work/`.
 
-## Connect a private GitHub repository
+## GitHub repository
 
-GitHub is connected and the authenticated account was verified as `stanfordgibson`. This integration cannot create repositories: both `gh repo create` and the REST create-repository endpoint returned “Resource not accessible by integration”. No repository was created and no commits were pushed.
+Private repository: https://github.com/stanfordgibson/documentary-context-review
 
-Create the repository using GitHub's website:
+Owner and private visibility were verified before pushing. Both branches are available:
 
-1. Open https://github.com/new and choose owner **stanfordgibson**.
-2. Name it **documentary-context-review** and select **Private**.
-3. Leave README, licence, and .gitignore initialization unchecked; the local repository already contains its baseline and source-review commits.
-4. Create the repository, then verify access, owner, and visibility before connecting and pushing:
+- `main`: committed project brief and three-milestone plan baseline.
+- `feat/source-review`: working milestone 1 demo, tests, and current documentation.
 
-```bash
-gh auth status
-gh repo view stanfordgibson/documentary-context-review --json nameWithOwner,visibility,url
-test "$(gh repo view stanfordgibson/documentary-context-review --json visibility --jq .visibility)" = PRIVATE || exit 1
-test "$(gh repo view stanfordgibson/documentary-context-review --json nameWithOwner --jq .nameWithOwner)" = stanfordgibson/documentary-context-review || exit 1
-git remote -v
-```
+The run command above clones the feature branch because the application is not yet merged into main. Existing local checkouts can use `git switch feat/source-review`.
 
-If the integration cannot see the new repository, grant it access through the GitHub connection settings. After verifying that no intended origin exists, connect it:
-
-```bash
-git remote add origin https://github.com/stanfordgibson/documentary-context-review.git
-```
-
-Verify the remote exactly, then push both branches:
-
-```bash
-test "$(git remote get-url origin)" = https://github.com/stanfordgibson/documentary-context-review.git || exit 1
-git push -u origin main
-git push -u origin feat/source-review
-```
-
-If the name already exists, inspect its contents before connecting; do not overwrite its history. If pushing is denied, check that the integration has write access to this repository. Do not paste credentials into chat.
+The origin is `https://github.com/stanfordgibson/documentary-context-review.git`. The GitHub connection supports the completed pushes. Repository creation and visibility changes required the owner to use GitHub's website; future administration changes may also require that step. Never paste credentials into chat.
 
 Next: milestone 2 adds evidence-validated deterministic AI observations, including no-concern, insufficient-context, and failure states. See the plan for Wednesday's decision-persistence and submission schedule.
