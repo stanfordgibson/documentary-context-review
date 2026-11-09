@@ -10,31 +10,62 @@ The creator brings documentary filmmaking experience, experience participating i
 
 Primary user: an African documentary filmmaker reviewing a short interview for a story. The prototype serves one filmmaker with one interview and three proposed excerpts. Primary track: **Creation & Craft**. Secondary track: **Truth, Authorship & Ownership**. The contribution is a reusable review workflow that supports storytellers' own editorial judgment, rather than an automated editor or a single presented story.
 
+## Approved capstone boundary
+
+Approved on 9 November 2026. The capstone uses one explicitly fictional English-language interview and three predefined excerpts. Observations are authored and delivered by a deterministic local stub; no provider request occurs. This demonstrates the review workflow, not general AI detection accuracy.
+
+Each active excerpt is assessed against its original interview, including relevant questions and surrounding turns. **Kept** means source words included in the active excerpt; **omitted** means source words excluded from that excerpt. These labels do not describe the entire documentary. The three examples are separate proposed selections, not an assembled final edit.
+
+An editor may record that context appears elsewhere in the documentary. The prototype records that explanation as human reasoning without verifying it. Assessing surrounding final-edit material, later clarification, contradictions, and reordered edits is outside the capstone's demonstrated coverage.
+
 ## Review workflow
 
-1. Select a proposed excerpt.
-2. Compare its exact selected source text with the interviewer's question, timestamps, speaker labels, and nearby turns; open the full transcript when needed.
-3. Inspect AI observations with validated turn references and verbatim source quotes. Treat observations as questions to review, not verdicts.
-4. Choose Keep, Revise, or Leave out and explain why. Save and reopen the record independently of the AI observations.
+1. Choose a predefined excerpt and inspect its exact selected words.
+2. Review one complete source transcript annotated KEPT/OMITTED for that excerpt, with the question, relevant context, stable IDs, speakers, and turn-level timestamps.
+3. Inspect the potential material meaning consequence, validated source evidence, and authentic source-based remedy. Ordinary compression is not itself a concern.
+4. Explicitly mark each material finding Resolved or Dismissed with a rationale; findings begin Open and never close automatically.
+5. Record Keep, Revise, or Leave out for the excerpt with a rationale. Excerpt decisions do not automatically resolve findings.
+6. Save and reopen decisions, then export a readable internal editorial integrity report that preserves unresolved concerns.
+
+## Milestones and success criteria
+
+Detailed acceptance criteria and verification gates are in [MVP_PLAN.md](MVP_PLAN.md).
+
+- **Milestone 1 — source review:** exact selections, questions, context, IDs, and timestamps resolve; failures remain visible and the source stays accessible. Implemented on `feat/source-review` at `470b372`; the branch verification record covers this milestone only.
+- **Milestone 2 — evidence-based meaning review:** by 17:00 SAST on 10 November. Annotated complete source, colour-independent status and accessible navigation; authored material findings explain changed audience interpretation; citations and restoration passages are validated and quotations come from the source.
+- **Milestone 3 — human decisions and internal report:** by 13:00 SAST on 11 November. Explicit finding decisions and separate excerpt decisions persist locally with rationales and revision identity. A readable export records scope, evidence, remedies, decisions, and unresolved concerns.
+
+Three examples demonstrate harmless shortening, an omitted qualification, and a question-dependent answer. “No concern flagged”, “Insufficient context”, and “Review unavailable” are distinct; none is approval. Invalid required evidence rejects the response rather than presenting a partially valid review.
+
+Green/red annotations have explicit KEPT/OMITTED text and a labels-only alternative. Status is available to assistive technology, controls work by keyboard with visible focus, and enlarged text and narrow layouts remain usable. Single/double underline may be optional, not the primary accessible alternative.
+
+Resolved means the editor recorded how a concern was addressed; it does not mean a modified film or transcript was verified. All three excerpts need saved decisions and every material finding needs an explicit decision before the review is labelled complete. Completion is not truthfulness certification. Incomplete reports remain exportable with missing decisions and open findings identified.
 
 ## Scope and boundaries
 
-One explicitly fictional English-language interview, three short excerpts, a deterministic AI stub, and local decision persistence. Stable IDs link selections, evidence, and decisions to a specific transcript version. Real interview data stays local by default.
+Stable identities link source, excerpt, review revision, evidence, and decisions. Source or selection changes require reassessment rather than silently reusing a completed review.
 
-Outside initial scope: automatic transcription, video editing, public hosting, accounts, collaboration, content tracking, live model integration, multilingual accuracy claims, and production readiness. No claims of participant consent, source authenticity, or factual correctness can be inferred from this demo.
+The app records decisions; it does not modify interview text, apply an edit, verify footage, or publish an edit. The demo runs locally without accounts, credentials, remote assets, or external model requests. Local browser records can be cleared, are not encrypted by the app, and do not sync.
 
-## Success criteria
+The internal report identifies the fictional source/version, exact excerpts, review boundary, authored deterministic method, findings, source quotations and timestamps, remedies, decisions/rationales/update times, and unresolved or outdated results. It states that supplied transcript material was reviewed without independently verifying facts, footage, or context elsewhere. No truth score, fidelity percentage, or certification language is permitted.
 
-- Each excerpt displays its exact selected source lines, question, surrounding turns, stable IDs, speaker labels, and timestamps, plus access to the complete transcript.
-- Three examples cover preserved meaning, an omitted qualification, and dependence on an interviewer question. These are authored demo cases, not AI findings in milestone 1.
-- Missing references produce a clear error without presenting a partially resolved excerpt as valid; the full source remains accessible.
-- Later AI flags identify a specific concern and valid source IDs. Displayed quotes come from the transcript, never from model-generated quotations. Invalid output or insufficient evidence cannot hide the source or become an affirmative clearance.
-- A no-flags response reads “No concern flagged” and leaves review open to the filmmaker.
-- A filmmaker can save Keep / Revise / Leave out with a rationale, close the page, and reopen the same record. Decisions remain visibly distinct from AI observations.
-- The demo runs locally without accounts, credentials, remote assets, or external model requests.
+Outside capstone scope: real input workflows, automatic transcription, video editing, public hosting, accounts, collaboration, content tracking, live model integration, multilingual accuracy claims, and production readiness. No claims of participant consent, source authenticity, or factual correctness can be inferred from the demo.
+
+## Next product phase — both input workflows
+
+Both workflows remain committed product requirements, deferred beyond the 11 November capstone:
+
+1. Import a source transcript and an edited transcript.
+2. Import a source transcript and select passages within Context Cut.
+
+Both must feed the same annotated-source, analysis, decision, and reporting process. Define supported formats and validation; exact, uncertain, and unmatched alignment; human confirmation of ambiguity; repeated phrases; multiple cuts within a turn; and reordered selections. Expand analysis to surrounding final-edit context, later clarification, contradiction, and rearrangement. Live model integration requires separate consent controls and quality evaluation.
 
 ## Data responsibility
 
-The synthetic fixture is explicitly allowlisted in Git. Media, working transcripts, environment files, credentials, and local decision exports are ignored. Ignore rules are a precaution, not a substitute for checking staged changes. Do not put identifying interview material in code or tracked documentation.
+The synthetic fixture is explicitly allowlisted in Git. Media, working transcripts, environment files, credentials, and local decision/report exports are ignored. Ignore rules are a precaution, not a substitute for checking staged changes. Do not put identifying interview material in code or tracked documentation.
 
 Before any live model integration, document the provider and endpoint, exactly which question/selected/neighboring turns and metadata leave the device, retention and logging behavior, applicable consent, and the opt-in control. Treat interview text as untrusted data inside a clearly separated model input, never as instructions. Live integration is outside this capstone.
+
+## Delivery control
+
+Final submission is due Wednesday 11 November 2026, with an internal target of 18:00 SAST. Protect evidence validation, clear limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first. Unmet criteria must be reported as incomplete. Specification approval and this documentation update do not authorise implementation; coding remains paused until requested.
