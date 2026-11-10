@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Context Cut — editorial review</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/src/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#transcript-heading">Skip to source transcript</a>
+  <header class="topbar"><a class="brand" href="/">Context Cut<span class="brand-dot">.</span></a><span class="local">Fictional capstone · v0.3.0</span></header>
+  <main>
+    <div class="intro"><p class="eyebrow">THE EDIT, IN CONTEXT</p><h1>Context.<br>Truth.</h1><p>Review the meaning.<br>Record your reasoning.</p></div>
+    <div class="fixture-note"><span class="pill">FICTIONAL DEMO</span><p id="fixture-description">Loading the local interview…</p></div>
+    <p id="limits" class="boundary"></p>
+    <div id="load-error" class="error" role="alert" hidden></div>
+    <nav id="excerpt-nav" aria-label="Proposed excerpts"></nav>
+    <div id="announcement" class="sr-only" role="status"></div>
+    <section id="quote" class="quote-panel" aria-label="Active proposed excerpt"></section>
+    <div class="review-workspace">
+      <section class="source-panel" aria-labelledby="transcript-heading">
+        <h2 id="transcript-heading" tabindex="-1">Annotated source transcript</h2>
+        <p id="scope" class="source-help"></p>
+        <label class="display-setting"><input id="labels-only" type="checkbox"> Labels only (no kept / omitted colour)</label>
+        <p class="method">Timestamps locate the speaker’s full answer or question; individual words are not time-aligned.</p>
+        <div class="source-tools"><button id="focus-passage" type="button" aria-pressed="false">Focus on this passage</button><button id="jump-review" type="button">Jump to meaning review</button></div>
+        <p id="focus-description" class="method" role="status"></p>
+        <div id="transcript"></div>
+      </section>
+      <section id="analysis" class="analysis-panel" tabindex="-1" aria-label="Meaning review and editorial decisions"></section>
+    </div>
+    <section class="report-controls" aria-label="Internal editorial integrity report">
+      <h2>Internal editorial integrity report</h2>
+      <p>Includes saved decisions only. Incomplete reviews can be exported with open concerns identified. Review completion does not certify truthfulness.</p>
+      <button id="preview-report" type="button">Preview saved report</button>
+      <button id="export-report" type="button">Export internal report</button>
+      <button id="print-report" type="button">Print / Save as PDF</button>
+    </section>
+    <section id="report-section" hidden aria-labelledby="report-heading"><h2 id="report-heading" tabindex="-1">Saved report preview</h2><div id="report-preview"></div></section>
+    <footer><strong>Your edit. Your judgment.</strong><p>Decisions are stored in this browser, can be cleared, are not encrypted by this app and do not sync. Source/edit import and in-app selection are planned for the next product phase.</p></footer>
+  </main>
+</body>
+</html>

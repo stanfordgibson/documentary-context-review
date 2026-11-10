@@ -24,3 +24,5 @@ data/*
 *.vtt
 *.transcript.*
 decisions/
+reports/
+dist/

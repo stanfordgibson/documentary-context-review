@@ -1,6 +1,6 @@
 # MVP plan
 
-Approved capstone specification: 9 November 2026. This plan describes required future behaviour, not a claim that milestones 2 and 3 are implemented. Coding remains paused until separately requested.
+Approved capstone specification: 9 November 2026. The owner subsequently authorised implementation on 9 November. Acceptance criteria remain the requirements baseline; see VERIFICATION.md for actual verification and limits.
 
 ## Delivery window
 
@@ -91,8 +91,8 @@ Use browser localStorage for this single-user prototype. Tie records to intervie
 | ID | Requirement | Acceptance criterion |
 | --- | --- | --- |
 | M3-01 | Excerpt decision | Support Keep / Revise / Leave out for each excerpt, requiring a nonblank rationale. |
-| M3-02 | Finding decision | Material findings begin Open. An editor explicitly marks each Resolved or Dismissed with a rationale. Never close findings automatically. |
-| M3-03 | Accurate resolution meaning | Resolved means the editor recorded how the concern was addressed; it does not mean a modified film or transcript was verified. |
+| M3-02 | Finding decision | Material findings begin Needs attention. An editor explicitly marks each Addressed or Dismissed with a rationale. Never close findings automatically. |
+| M3-03 | Accurate resolution meaning | Addressed means the editor recorded how the concern was addressed; it does not mean a modified film or transcript was verified. |
 | M3-04 | Separate records | Observations, finding decisions, and excerpt decisions remain visibly distinct. Keep does not automatically dismiss findings. |
 | M3-05 | Local persistence | Decisions, rationales, update times, and record versions survive navigation and reload, tied to the correct source, excerpt, selection, and review revision. |
 | M3-06 | Visible storage failures | Unavailable storage, malformed records, and version mismatches produce clear messages. Never claim an unsuccessful save succeeded. |
@@ -149,4 +149,4 @@ Keep the repository private under the verified owner. Never substitute public ho
 
 Protect evidence validation, clear review limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first; basic report export remains required. Report unmet criteria as incomplete rather than implying they work.
 
-Approval of this specification and the documentation update does not authorise coding. Implementation remains paused until separately requested. The capstone makes no automated transcription, video editing, hosting, account, collaboration, content tracking, multilingual accuracy, or production readiness commitments.
+Implementation was subsequently authorised by the owner on 9 November 2026. See VERIFICATION.md for the implemented checks and remaining verification limits. The capstone makes no automated transcription, video editing, hosting, account, collaboration, content tracking, multilingual accuracy, or production readiness commitments.

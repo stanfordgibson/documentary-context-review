@@ -1,0 +1,21 @@
+{
+  "id": "fictional-community-cinema",
+  "version": 1,
+  "title": "A screen in the neighbourhood",
+  "description": "Entirely fictional interview with Naledi, an imagined community cinema organiser in Johannesburg. All people, events, and dialogue are invented for this demo.",
+  "turns": [
+    { "id": "T01", "speaker": "Interviewer", "start": "00:00", "end": "00:07", "text": "What does a neighbourhood screening offer that watching alone cannot?" },
+    { "id": "T02", "speaker": "Naledi", "start": "00:08", "end": "00:22", "text": "A screening gives us a reason to sit together. The conversation after the film is as important as the film itself. People stay to exchange their own stories." },
+    { "id": "T03", "speaker": "Interviewer", "start": "00:23", "end": "00:29", "text": "Could you keep these screenings free next year?" },
+    { "id": "T04", "speaker": "Naledi", "start": "00:30", "end": "00:45", "text": "We can keep the screenings free, but only if the hall remains available without a rental fee. If that changes, we will need a different plan." },
+    { "id": "T05", "speaker": "Interviewer", "start": "00:46", "end": "00:55", "text": "Someone suggested replacing the discussion with a ticketed reception. Would you support that change?" },
+    { "id": "T06", "speaker": "Naledi", "start": "00:56", "end": "01:05", "text": "No, I would not support that. The discussion should be open to everyone who comes to the film." },
+    { "id": "T07", "speaker": "Interviewer", "start": "01:06", "end": "01:12", "text": "What would you like a new visitor to know?" },
+    { "id": "T08", "speaker": "Naledi", "start": "01:13", "end": "01:24", "text": "You do not need to be a film expert. Come with a question, and make room for someone else's answer." }
+  ],
+  "excerpts": [
+    { "id": "conversation", "title": "The conversation after", "caseLabel": "Shortened quote", "questionTurnId": "T01", "selections": [{ "turnId": "T02", "text": "The conversation after the film is as important as the film itself." }] },
+    { "id": "free-screenings", "title": "Keeping screenings free", "caseLabel": "Omitted qualification", "questionTurnId": "T03", "selections": [{ "turnId": "T04", "text": "We can keep the screenings free" }] },
+    { "id": "support", "title": "What does “that” mean?", "caseLabel": "Question-dependent reply", "questionTurnId": "T05", "selections": [{ "turnId": "T06", "text": "No, I would not support that." }] }
+  ]
+}

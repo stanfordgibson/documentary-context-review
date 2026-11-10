@@ -23,7 +23,7 @@ An editor may record that context appears elsewhere in the documentary. The prot
 1. Choose a predefined excerpt and inspect its exact selected words.
 2. Review one complete source transcript annotated KEPT/OMITTED for that excerpt, with the question, relevant context, stable IDs, speakers, and turn-level timestamps.
 3. Inspect the potential material meaning consequence, validated source evidence, and authentic source-based remedy. Ordinary compression is not itself a concern.
-4. Explicitly mark each material finding Resolved or Dismissed with a rationale; findings begin Open and never close automatically.
+4. Explicitly mark each material finding Addressed or Dismissed with a rationale; findings begin Needs attention and never close automatically.
 5. Record Keep, Revise, or Leave out for the excerpt with a rationale. Excerpt decisions do not automatically resolve findings.
 6. Save and reopen decisions, then export a readable internal editorial integrity report that preserves unresolved concerns.
 
@@ -39,7 +39,7 @@ Three examples demonstrate harmless shortening, an omitted qualification, and a 
 
 Green/red annotations have explicit KEPT/OMITTED text and a labels-only alternative. Status is available to assistive technology, controls work by keyboard with visible focus, and enlarged text and narrow layouts remain usable. Single/double underline may be optional, not the primary accessible alternative.
 
-Resolved means the editor recorded how a concern was addressed; it does not mean a modified film or transcript was verified. All three excerpts need saved decisions and every material finding needs an explicit decision before the review is labelled complete. Completion is not truthfulness certification. Incomplete reports remain exportable with missing decisions and open findings identified.
+Addressed means the editor recorded how a concern was addressed; it does not mean a modified film or transcript was verified. All three excerpts need saved decisions and every material finding needs an explicit decision before the review is labelled complete. Completion is not truthfulness certification. Incomplete reports remain exportable with missing decisions and open findings identified.
 
 ## Scope and boundaries
 
@@ -68,4 +68,4 @@ Before any live model integration, document the provider and endpoint, exactly w
 
 ## Delivery control
 
-Final submission is due Wednesday 11 November 2026, with an internal target of 18:00 SAST. Protect evidence validation, clear limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first. Unmet criteria must be reported as incomplete. Specification approval and this documentation update do not authorise implementation; coding remains paused until requested.
+Final submission is due Wednesday 11 November 2026, with an internal target of 18:00 SAST. Protect evidence validation, clear limitations, accessible status, explicit human decisions, and accurate reporting. Reduce presentation polish and optional export formats first. Unmet criteria must be reported as incomplete. Implementation was subsequently authorised by the owner on 9 November 2026. See VERIFICATION.md for implemented checks and remaining verification limits.
