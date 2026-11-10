@@ -66,8 +66,8 @@ test('explicit independent decisions persist and edits cannot mutate the saved r
   assert.deepEqual(record.excerpt, old.excerpt);
   assert.equal(isComplete(review, loadRecord(storage, fixture, excerpt, review)), true);
   assert.equal(old.findings['CC-001'], undefined);
-  assert.throws(() => saveDecision(storage, fixture, excerpt, review, record, 'CC-001', 'Resolved', ' ', now), /rationale/);
-  assert.throws(() => saveDecision(storage, fixture, excerpt, review, record, 'unknown', 'Resolved', 'Reason', now));
+  assert.throws(() => saveDecision(storage, fixture, excerpt, review, record, 'CC-001', 'Addressed', ' ', now), /rationale/);
+  assert.throws(() => saveDecision(storage, fixture, excerpt, review, record, 'unknown', 'Addressed', 'Reason', now));
 });
 
 test('malformed, unavailable and stale storage cannot claim successful current decisions', () => {
@@ -87,16 +87,31 @@ test('malformed, unavailable and stale storage cannot claim successful current d
   assert.throws(() => saveDecision(silent, fixture, excerpt, review, null, null, 'Keep', 'Reason', now), /confirm/);
 });
 
+test('legacy Resolved labels migrate without losing rationale or time; dismissed findings keep their remedies', () => {
+  const storage = memory(), excerpt = fixture.excerpts[1], review = runReview(fixture, excerpt);
+  const record = saveDecision(storage, fixture, excerpt, review, null, 'CC-001', 'Addressed', 'Original rationale', now);
+  record.findings['CC-001'].status = 'Resolved';
+  storage.setItem(recordKey(fixture, excerpt), JSON.stringify(record));
+  const loaded = loadRecord(storage, fixture, excerpt, review);
+  assert.deepEqual(loaded.record.findings['CC-001'], { status: 'Addressed', rationale: 'Original rationale', updatedAt: now });
+  saveDecision(storage, fixture, excerpt, review, loaded.record, 'CC-001', 'Dismissed', 'Condition supplied elsewhere, recorded but not verified.', now);
+  const report = buildReport(fixture, storage, now);
+  assert.match(report, /Finding decision: Dismissed/);
+  assert.match(report, /but only if the hall remains available without a rental fee/);
+  assert.match(report, /1\. Limitations/); assert.match(report, /2\. Metadata/); assert.match(report, /3\. Findings/);
+  assert.match(report, /3\.1 The conversation after/); assert.match(report, /3\.2 Keeping screenings free/);
+});
+
 test('reports preserve missing decisions, evidence, remedies and complete human review without certification', () => {
   const storage = memory();
   let report = buildReport(fixture, storage, now);
-  assert.match(report, /INCOMPLETE/); assert.match(report, /Open — no saved decision/);
+  assert.match(report, /INCOMPLETE/); assert.match(report, /Needs attention — no saved decision/);
   assert.match(report, /T04/); assert.match(report, /Authentic source passages/);
   assert.match(report, /authored deterministic/); assert.match(report, /not general AI detection/);
   for (const excerpt of fixture.excerpts) {
     const review = runReview(fixture, excerpt);
     let record = saveDecision(storage, fixture, excerpt, review, null, null, 'Revise', 'Review recorded', now);
-    for (const flag of review.flags) record = saveDecision(storage, fixture, excerpt, review, record, flag.id, 'Resolved', 'Restoration requested; film not verified.', now);
+    for (const flag of review.flags) record = saveDecision(storage, fixture, excerpt, review, record, flag.id, 'Addressed', 'Restoration requested; film not verified.', now);
   }
   report = buildReport(fixture, storage, now);
   assert.match(report, /REVIEW COMPLETE — human decisions recorded; not truthfulness certification/);

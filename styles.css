@@ -95,6 +95,37 @@ button:disabled { cursor:default; opacity:.65; }
 .report-controls { margin-top:32px; padding:24px; border:1px solid var(--line); background:#fffefa; }
 .report-controls button { margin:4px 8px 4px 0; }
 #report-preview { white-space:pre-wrap; overflow-wrap:anywhere; font:14px/1.7 Arial,sans-serif; background:white; padding:24px; border:1px solid var(--line); }
+#excerpt-nav { position:sticky; top:0; z-index:3; background:var(--paper); padding:10px 0; border-bottom:1px solid var(--line); }
+.excerpt-choice { flex:1 1 200px; min-width:0; }
+#excerpt-nav .excerpt-button { width:100%; margin-bottom:5px; }
+.excerpt-summary { display:block; font-size:12px; line-height:1.35; color:#45554b; padding:0 5px; }
+.excerpt-choice:focus-within .excerpt-summary,.excerpt-choice:hover .excerpt-summary { background:#e5eddf; color:#183e2c; }
+.source-tools { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.source-review-link { font-size:12px; margin-top:12px; }
+.kept[role=button] { cursor:pointer; text-decoration:underline; text-decoration-style:dotted; text-underline-offset:3px; }
+.kept[role=button]:hover { background:#b7dfb7; }
+#analysis,.turn,#transcript-heading { scroll-margin-top:155px; }
+#report-preview p { white-space:pre-wrap; }
+#report-preview h1 { font:bold 24px/1.3 Georgia,serif; letter-spacing:0; }
+#report-preview h2 { margin-top:30px; border-bottom:1px solid #b8c2b8; padding-bottom:8px; }
+#report-preview h3 { margin:24px 0 12px; }
+@media(max-width:760px) {
+  #excerpt-nav { flex-wrap:nowrap; overflow-x:auto; gap:8px; }
+  .excerpt-choice { flex:0 0 220px; }
+  #excerpt-nav .excerpt-button { font-size:12px; min-height:52px; }
+  .excerpt-summary { font-size:11px; }
+}
+@media print {
+  @page { size:A4; margin:18mm; }
+  body { background:white; color:black; font-size:11pt; }
+  body>*,main>* { display:none!important; }
+  body>main,main>#report-section,#report-section #report-preview { display:block!important; }
+  #report-heading { display:none; }
+  main { padding:0; max-width:none; }
+  #report-preview { border:0; padding:0; font-size:11pt; line-height:1.45; }
+  #report-preview h2,#report-preview h3 { break-after:avoid; }
+  #report-preview p { orphans:3; widows:3; }
+}
 @media(max-width:1000px) { .review-workspace { grid-template-columns:1fr; } }
 @media(forced-colors:active) { .passage-label { border:1px solid CanvasText; } button,select,textarea,.citation { border-color:CanvasText; } }
 [hidden] { display:none!important; }

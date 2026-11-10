@@ -2,7 +2,7 @@ import { identity } from './review.js';
 
 export const SCHEMA = 1;
 export const excerptChoices = ['Keep', 'Revise', 'Leave out'];
-export const findingChoices = ['Resolved', 'Dismissed'];
+export const findingChoices = ['Addressed', 'Dismissed'];
 export const recordKey = (interview, excerpt) => `context-cut:decision:${JSON.stringify([interview.id, excerpt.id])}`;
 const nonblank = value => typeof value === 'string' && Boolean(value.trim());
 
@@ -13,9 +13,12 @@ export function validateRecord(interview, excerpt, review, record) {
   if (!record.findings || typeof record.findings !== 'object' || Array.isArray(record.findings) ||
       (record.excerpt !== null && !decision(record.excerpt, excerptChoices))) throw new Error('Saved decisions are malformed.');
   for (const [id, value] of Object.entries(record.findings)) {
-    if (!review.flags.some(flag => flag.id === id) || !decision(value, findingChoices)) throw new Error('Saved finding decision is invalid or outdated.');
+    if (!review.flags.some(flag => flag.id === id) || !decision(value, [...findingChoices, 'Resolved'])) throw new Error('Saved finding decision is invalid or outdated.');
   }
-  return record;
+  // Preserve existing saved rationales and dates when renaming the old label.
+  const current = structuredClone(record);
+  Object.values(current.findings).forEach(value => { if (value.status === 'Resolved') value.status = 'Addressed'; });
+  return current;
 }
 
 export function loadRecord(storage, interview, excerpt, review) {

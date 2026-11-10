@@ -15,7 +15,7 @@ const errors = [], external = [];
 page.on('pageerror', error => errors.push(error.message));
 page.on('request', request => { if (!request.url().startsWith(base) && !request.url().startsWith('blob:')) external.push(request.url()); });
 const selectExcerpt = async id => {
-  await page.getByRole('button', { name: fixture.excerpts.find(e => e.id === id).title, exact: false }).click();
+  await page.locator('#excerpt-nav').getByRole('button', { name: fixture.excerpts.find(e => e.id === id).title, exact: false }).click();
   await page.locator('#quote h2').filter({ hasText: fixture.excerpts.find(e => e.id === id).title }).waitFor();
 };
 const saveExcerpt = async (status, reason) => {
@@ -25,10 +25,10 @@ const saveExcerpt = async (status, reason) => {
   assert.match(await page.locator('.editorial-panel .save-state').innerText(), /Saved:/);
 };
 const saveFinding = async id => {
-  await page.getByLabel(`${id} finding decision`, { exact: true }).selectOption('Resolved');
+  await page.getByLabel(`${id} finding decision`, { exact: true }).selectOption('Addressed');
   await page.getByLabel(`${id} rationale`, { exact: true }).fill('Restore authentic context in edit. Changes are not verified by this app.');
   await page.getByRole('button', { name: `Save ${id} decision`, exact: true }).click();
-  assert.match(await page.locator('.finding .save-state').innerText(), /Saved: Resolved/);
+  assert.match(await page.locator('.finding .save-state').innerText(), /Saved: Addressed/);
 };
 async function preview() {
   await page.getByRole('button', { name: 'Preview saved report' }).click();
@@ -49,6 +49,19 @@ try {
   }
   assert.match(await preview(), /INCOMPLETE/);
   await selectExcerpt('free-screenings');
+  assert.match(await page.locator('#excerpt-nav button[aria-current]').getAttribute('title'), /condition/);
+  await page.getByRole('button', { name: 'Focus on this passage', exact: true }).click();
+  assert.equal(await page.locator('#transcript .turn:visible').count(), 3);
+  await page.locator('#transcript .kept').focus(); await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'analysis');
+  await page.getByRole('button', { name: 'Back to source passage' }).click();
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'source-T04');
+  await page.getByRole('button', { name: 'Show full transcript', exact: true }).click();
+  assert.equal(await page.locator('#transcript .turn:visible').count(), 8);
+  await page.getByRole('button', { name: 'Review excerpt: What does “that” mean?', exact: true }).click();
+  assert.equal(await page.locator('#quote h2').innerText(), 'What does “that” mean?');
+  assert.equal(await page.locator('#excerpt-nav button[aria-current]').innerText(), '03 · What does “that” mean?');
+  await selectExcerpt('free-screenings');
   assert.match(await page.locator('#analysis').innerText(), /unconditional promise/);
   assert.match(await page.locator('#analysis').innerText(), /but only if the hall remains available without a rental fee/);
   await page.locator('.citation a').first().click();
@@ -64,7 +77,7 @@ try {
   await page.reload();
   await page.getByLabel('Excerpt rationale', { exact: true }).waitFor();
   assert.equal(await page.getByLabel('Excerpt rationale', { exact: true }).inputValue(), 'Restore the rent-free hall condition.');
-  assert.equal(await page.getByLabel('CC-001 finding decision', { exact: true }).inputValue(), 'Resolved');
+  assert.equal(await page.getByLabel('CC-001 finding decision', { exact: true }).inputValue(), 'Addressed');
   await selectExcerpt('conversation'); await saveExcerpt('Keep', 'Meaning preserved in supplied context.');
   await selectExcerpt('support'); await saveExcerpt('Leave out', 'Reply needs its referent.');
   assert.match(await preview(), /INCOMPLETE/);
@@ -72,6 +85,16 @@ try {
   const complete = await preview();
   assert.match(complete, /REVIEW COMPLETE/); assert.doesNotMatch(complete, /INCOMPLETE/);
   assert.match(complete, /Restore the rent-free hall condition/);
+  assert.deepEqual(await page.locator('#report-preview h2').allTextContents(), ['1. Limitations', '2. Metadata', '3. Findings']);
+  assert.equal(await page.locator('#report-preview h3').count(), 3);
+  await page.evaluate(() => { window.print = () => { window.printRequested = true; }; });
+  await page.getByRole('button', { name: 'Print / Save as PDF' }).click();
+  assert.equal(await page.evaluate(() => window.printRequested), true);
+  await page.emulateMedia({ media: 'print' });
+  assert.equal(await page.locator('#excerpt-nav').isVisible(), false);
+  assert.equal(await page.locator('#report-preview').isVisible(), true);
+  await page.pdf({ path: 'work/internal-report.pdf', format: 'A4', printBackground: true, preferCSSPageSize: true });
+  await page.emulateMedia({ media: 'screen' });
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export internal report' }).click();
   const download = await downloadPromise;
@@ -84,6 +107,7 @@ try {
   await page.getByLabel('Excerpt rationale', { exact: true }).fill('UNSAVED SENTINEL');
   assert.doesNotMatch(await preview(), /UNSAVED SENTINEL/);
   await selectExcerpt('free-screenings');
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: 'work/editorial-review-desktop.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -100,7 +124,7 @@ try {
   await page.unroute('**/styles.css');
   await page.reload();
   // Native keyboard operation: select a different excerpt with focused button + Enter.
-  await page.getByRole('button', { name: /The conversation after/ }).focus();
+  await page.locator('#excerpt-nav').getByRole('button', { name: /The conversation after/ }).focus();
   await page.keyboard.press('Enter');
   assert.equal(await page.locator('#quote h2').innerText(), 'The conversation after');
   // Tampered and outdated saved records are visible and cannot complete review.

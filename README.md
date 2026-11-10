@@ -9,7 +9,7 @@ Andela × OpenAI Codex Accelerator capstone. Submission deadline: Wednesday 11 N
 Requires Node.js 22 or newer. Application dependencies, credentials, and `npm install` are not required.
 
 ```sh
-git clone --branch feat/editorial-review https://github.com/stanfordgibson/documentary-context-review.git
+git clone https://github.com/stanfordgibson/documentary-context-review.git
 cd documentary-context-review
 npm start
 ```
@@ -23,10 +23,12 @@ The loopback-only server serves an explicit allowlist of app files. Repository d
 1. Choose one of three predefined excerpts from the entirely fictional Naledi interview.
 2. Read the full source, labelled KEPT/OMITTED for that excerpt. Choose Labels only for a colour-free view. Labels are exposed as text to assistive technology; evidence links move keyboard focus to source turns.
 3. Inspect the authored meaning observation, validated source evidence and authentic restoration passage. The preserved-meaning example shows “No concern flagged”, not approval.
-4. Explicitly resolve or dismiss each material finding with a rationale. Separately choose Keep / Revise / Leave out for the excerpt. No edits are applied or verified.
+4. Mark each material finding Addressed or Dismissed with a rationale. Addressed records how you dealt with it; Dismissed records why it does not apply or warrant a change. Both preserve evidence and suggested remedies. Separately choose Keep / Revise / Leave out for the excerpt. No edits are applied or verified.
 5. Save and reopen decisions after reload. Preview or export the readable internal report. Reports use saved decisions only and remain incomplete until all excerpt and finding decisions are recorded.
 
-The report is a plain-text working document. It includes review scope, source/version, exact excerpts, method, evidence, consequences, remedies, decisions and unresolved concerns. Completion records human review; it does not certify truthfulness.
+The report has Limitations, Metadata and Findings sections, with a numbered subsection for every excerpt. Export text or choose Print / Save as PDF and select your browser's PDF destination. Completion records human review; it does not certify truthfulness.
+
+Kept passages open their meaning review. Other example passages have review links that select the corresponding excerpt. The excerpt selector stays available while scrolling and includes one-line summaries for hover, keyboard and touch users. Focus on this passage collapses distant turns; Show full transcript restores them. Old saved Resolved labels appear as Addressed with their rationale and timestamp retained.
 
 ## Boundaries
 
@@ -43,7 +45,7 @@ The report is a plain-text working document. It includes review scope, source/ve
 npm test
 ```
 
-Thirteen Node tests cover exact evidence, material cases and authentic remedies, full response validation, instruction-like transcript content, independent decisions, malformed/blocked/stale storage, and complete/incomplete reports.
+Fourteen Node tests cover exact evidence, material cases and authentic remedies, full response validation, instruction-like transcript content, independent decisions, legacy decision labels, malformed/blocked/stale storage, and complete/incomplete reports. GitHub Actions runs these on pushes and pull requests.
 
 Optional browser verification uses Playwright as a development-only tool in ignored `work/browser`; it is not an application dependency:
 
@@ -69,4 +71,10 @@ The browser suite checks annotations, evidence links, decisions/reload, report d
 
 Private repository: https://github.com/stanfordgibson/documentary-context-review
 
-`main` contains the approved planning baseline. `feat/source-review` preserves Milestone 1 at `470b372`. `feat/editorial-review` includes that source-review implementation, the approved specification and Milestones 2/3. The clone command selects the working implementation branch.
+`main` is the reviewed capstone release branch. `feat/source-review` preserves Milestone 1 at `470b372`; `feat/editorial-review` retains the implementation history. Pull requests document review and verification before integration.
+
+## Hosted demonstration
+
+[Context Cut Naledi demo](https://context-cut-naledi-demo.codex-certif-9427.chatgpt.site) uses the fictional fixture and browser-local decisions. Access follows the Site's sharing settings; a private link alone does not grant evaluator access. Local decisions do not transfer to the hosted address.
+
+GitHub remains the project history. `.openai/hosting.json` identifies the Site; `node scripts/build-site.mjs` prepares only the eight allowlisted browser assets in ignored `dist/`. Sites publication uses a separately versioned source mirror and the build produced from that source. No real transcripts or saved decisions are included.

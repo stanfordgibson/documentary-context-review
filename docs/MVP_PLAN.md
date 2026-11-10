@@ -91,8 +91,8 @@ Use browser localStorage for this single-user prototype. Tie records to intervie
 | ID | Requirement | Acceptance criterion |
 | --- | --- | --- |
 | M3-01 | Excerpt decision | Support Keep / Revise / Leave out for each excerpt, requiring a nonblank rationale. |
-| M3-02 | Finding decision | Material findings begin Open. An editor explicitly marks each Resolved or Dismissed with a rationale. Never close findings automatically. |
-| M3-03 | Accurate resolution meaning | Resolved means the editor recorded how the concern was addressed; it does not mean a modified film or transcript was verified. |
+| M3-02 | Finding decision | Material findings begin Needs attention. An editor explicitly marks each Addressed or Dismissed with a rationale. Never close findings automatically. |
+| M3-03 | Accurate resolution meaning | Addressed means the editor recorded how the concern was addressed; it does not mean a modified film or transcript was verified. |
 | M3-04 | Separate records | Observations, finding decisions, and excerpt decisions remain visibly distinct. Keep does not automatically dismiss findings. |
 | M3-05 | Local persistence | Decisions, rationales, update times, and record versions survive navigation and reload, tied to the correct source, excerpt, selection, and review revision. |
 | M3-06 | Visible storage failures | Unavailable storage, malformed records, and version mismatches produce clear messages. Never claim an unsuccessful save succeeded. |

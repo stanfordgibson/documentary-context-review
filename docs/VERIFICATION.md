@@ -1,5 +1,13 @@
 # Verification record
 
+## Review refinements — 10 November 2026, v0.3.0
+
+Owner-approved refinements add the Context. Truth. headline; Needs attention / Addressed / Dismissed finding labels and explanations; sticky excerpt navigation with summaries; keyboard-accessible kept-passage review links; other-excerpt source links; focused/full transcript modes; and numbered report sections with browser Print / Save as PDF.
+
+`npm test`: **14 passed**, including legacy Resolved-to-Addressed label migration preserving rationale/time and a dismissed finding retaining its authentic remedy. Expanded browser checks passed for focus mode, source/review return navigation, associated excerpt selection, report headings and print invocation. A three-page A4 PDF was generated through Chromium print rendering, rendered to PNG using Poppler and visually inspected. Existing saved-report/download, blocked/stale storage, evidence failure and accessibility checks remain included. This is browser PDF printing, not a separate direct PDF-download service.
+
+GitHub Actions now runs the logic suite for pushes and pull requests. The Sites build allowlists eight fictional browser assets; uploads and live model integration remain deferred. Hosted publication/access verification is recorded separately when complete. No formal assistive-technology user audit has been performed.
+
 ## Milestones 2 and 3 — 9 November 2026
 
 Implemented on `feat/editorial-review` after owner approval of the specification and subsequent authorisation to code. The branch incorporates the approved main documentation and preserves the Milestone 1 source-review history. The entries below describe actual checks, not general AI analysis quality.
