@@ -98,8 +98,66 @@ test('legacy Resolved labels migrate without losing rationale or time; dismissed
   const report = buildReport(fixture, storage, now);
   assert.match(report, /Finding decision: Dismissed/);
   assert.match(report, /but only if the hall remains available without a rental fee/);
-  assert.match(report, /1\. Limitations/); assert.match(report, /2\. Metadata/); assert.match(report, /3\. Findings/);
-  assert.match(report, /3\.1 The conversation after/); assert.match(report, /3\.2 Keeping screenings free/);
+  assert.match(report, /1\. Limitations/); assert.match(report, /2\. Metadata/); assert.match(report, /4\. Findings/);
+  assert.match(report, /4\.1 The conversation after/); assert.match(report, /4\.2 Keeping screenings free/);
+});
+
+test('summary counts open, addressed, dismissed and saved excerpt decisions independently', () => {
+  const storage = memory();
+  let report = buildReport(fixture, storage, now);
+  assert.match(report, /3 of 3 excerpts reviewed\. 1 with no concern flagged; 2 material findings/);
+  assert.match(report, /\| Material findings \| 2 \| 0 \| 0 \| 2 \|/);
+  assert.match(report, /\| Excerpts \| 0 \| 0 \| 0 \| 3 \| 3 \|/);
+  for (const [index, excerpt] of fixture.excerpts.entries()) {
+    const review = runReview(fixture, excerpt);
+    let record = saveDecision(storage, fixture, excerpt, review, null, null, index === 0 ? 'Keep' : index === 1 ? 'Revise' : 'Leave out', 'Saved decision', now);
+    for (const flag of review.flags) record = saveDecision(storage, fixture, excerpt, review, record, flag.id, index === 1 ? 'Addressed' : 'Dismissed', 'Saved assessment', now);
+  }
+  report = buildReport(fixture, storage, now);
+  assert.match(report, /\| Material findings \| 0 \| 1 \| 1 \| 2 \|/);
+  assert.match(report, /\| Excerpts \| 1 \| 1 \| 1 \| 0 \| 3 \|/);
+  assert.match(report, /Review method: Predefined demonstration observations\nReview version: 1/);
+  assert.doesNotMatch(report, /Review revision:|authored-1/);
+  assert.match(report, /Excerpt identity: conversation\nExact selection: T02:/);
+  assert.match(report, /Excerpt decision: Keep — Saved decision\nUpdated:/);
+});
+
+test('summary treats malformed and stale records as pending and discloses unavailable reviews', () => {
+  const storage = memory();
+  for (const excerpt of fixture.excerpts) {
+    const review = runReview(fixture, excerpt);
+    saveDecision(storage, fixture, excerpt, review, null, null, 'Keep', 'Saved decision', now);
+  }
+  storage.setItem(recordKey(fixture, fixture.excerpts[0]), '{malformed');
+  const key = recordKey(fixture, fixture.excerpts[1]);
+  const stale = JSON.parse(storage.getItem(key)); stale.identity += 'outdated'; storage.setItem(key, JSON.stringify(stale));
+  let report = buildReport(fixture, storage, now);
+  assert.match(report, /\| Excerpts \| 1 \| 0 \| 0 \| 2 \| 3 \|/);
+  assert.match(report, /\| Material findings \| 2 \| 0 \| 0 \| 2 \|/);
+  report = buildReport(fixture, storage, now, (interview, excerpt) => ({ ...runReview(interview, excerpt), status: 'unavailable', flags: [] }));
+  assert.match(report, /0 of 3 excerpts reviewed/);
+  assert.match(report, /3 excerpt reviews unavailable/);
+  assert.match(report, /\| Excerpts \| 0 \| 0 \| 0 \| 3 \| 3 \|/);
+  assert.match(report, /INCOMPLETE/);
+  const unknown = buildReport(fixture, storage, now, (interview, excerpt) => ({ ...runReview(interview, excerpt), status: 'insufficient_context', flags: [] }));
+  assert.match(unknown, /3 with insufficient context/);
+});
+
+test('summary counts several findings in one excerpt without inflating excerpt totals', () => {
+  const storage = memory();
+  const reviewer = (interview, excerpt) => {
+    const review = runReview(interview, excerpt);
+    if (excerpt.id === 'free-screenings') review.flags.push({ ...structuredClone(review.flags[0]), id: 'CC-EXTRA' });
+    return review;
+  };
+  const excerpt = fixture.excerpts[1], review = reviewer(fixture, excerpt);
+  let record = saveDecision(storage, fixture, excerpt, review, null, null, 'Revise', 'Saved decision', now);
+  record = saveDecision(storage, fixture, excerpt, review, record, 'CC-001', 'Addressed', 'Restoration recorded', now);
+  saveDecision(storage, fixture, excerpt, review, record, 'CC-EXTRA', 'Dismissed', 'Concern not applicable', now);
+  const report = buildReport(fixture, storage, now, reviewer);
+  assert.match(report, /3 of 3 excerpts reviewed\. 1 with no concern flagged; 3 material findings/);
+  assert.match(report, /\| Material findings \| 1 \| 1 \| 1 \| 3 \|/);
+  assert.match(report, /\| Excerpts \| 0 \| 1 \| 0 \| 2 \| 3 \|/);
 });
 
 test('reports preserve missing decisions, evidence, remedies and complete human review without certification', () => {

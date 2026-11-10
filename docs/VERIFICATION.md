@@ -1,5 +1,11 @@
 # Verification record
 
+## Report-only refinements — 10 November 2026
+
+Added an executive summary after Metadata with separate finding-status and excerpt-decision tables. Counts use the same validated saved records as the detail; missing, malformed or stale records remain pending, and unavailable/insufficient reviews are disclosed. Metadata now explains the predefined review method and version, replacing repeated `Review revision: authored-1` labels. Report field keys are bold italic and grouped as identity, review and decision; evidence and remedy subheadings remain separate from their content. The executive summary and short field groups stay together when printing.
+
+`npm test`: **17 passed**. New count checks include open/addressed/dismissed findings, all editorial choices, stale/malformed records, unavailable/insufficient reviews and several findings in one excerpt. Expanded browser checks passed for table totals, semantic headings, bold-italic labels, grouped lines, mobile report width, saved-only export and PDF printing, alongside the existing regressions. The generated four-page A4 PDF was rendered with Poppler and visually inspected. Changes are limited to report generation/rendering, report-scoped styles, verification tests and this record; source analysis, navigation, saved decision identities and other UI remain unchanged.
+
 ## Review refinements — 10 November 2026, v0.3.0
 
 Owner-approved refinements add the Context. Truth. headline; Needs attention / Addressed / Dismissed finding labels and explanations; sticky excerpt navigation with summaries; keyboard-accessible kept-passage review links; other-excerpt source links; focused/full transcript modes; and numbered report sections with browser Print / Save as PDF.
