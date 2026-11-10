@@ -4,6 +4,16 @@ import { loadRecord, saveDecision, excerptChoices, findingChoices } from './reco
 import { buildReport, renderReport } from './report.js';
 
 const $ = selector => document.querySelector(selector);
+const settingsPanel = $('#settings-panel');
+const settingsButton = $('#open-settings');
+settingsButton.addEventListener('click', () => {
+  settingsPanel.showModal();
+  settingsButton.setAttribute('aria-expanded', 'true');
+});
+settingsPanel.addEventListener('close', () => {
+  settingsButton.setAttribute('aria-expanded', 'false');
+  settingsButton.focus({ preventScroll: true });
+});
 function el(tag, text, className) {
   const node = document.createElement(tag);
   if (text !== undefined) node.textContent = text;

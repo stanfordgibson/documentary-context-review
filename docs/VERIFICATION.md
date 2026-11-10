@@ -1,5 +1,11 @@
 # Verification record
 
+## Settings and help — 10 November 2026
+
+Added the approved top-right settings wheel and labelled Settings and help modal. About covers purpose, the fictional predefined demonstration, limitations and browser-local data. Eight expandable Help topics cover quick start, transcript terms, review terms, finding versus editorial decisions, navigation, saving/reporting, accessibility and troubleshooting. No private repository or support contact is exposed.
+
+All **17 Node tests passed**. The expanded browser suite passed, including native dialog focus containment, initial Close focus, Escape and Close restoring focus to the wheel, topic expansion, preservation of unsaved rationale and selection, no accidental save, 390px dialog layout and Help access during fixture-loading failure. Desktop and mobile screenshots were visually inspected. Existing evidence, report, persistence and failure regression checks continue to pass. Review logic, record identities and reporting behaviour are unchanged.
+
 ## Report-only refinements — 10 November 2026
 
 Added an executive summary after Metadata with separate finding-status and excerpt-decision tables. Counts use the same validated saved records as the detail; missing, malformed or stale records remain pending, and unavailable/insufficient reviews are disclosed. Metadata now explains the predefined review method and version, replacing repeated `Review revision: authored-1` labels. Report field keys are bold italic and grouped as identity, review and decision; evidence and remedy subheadings remain separate from their content. The executive summary and short field groups stay together when printing.
