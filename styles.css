@@ -109,6 +109,13 @@ button:disabled { cursor:default; opacity:.65; }
 #report-preview h1 { font:bold 24px/1.3 Georgia,serif; letter-spacing:0; }
 #report-preview h2 { margin-top:30px; border-bottom:1px solid #b8c2b8; padding-bottom:8px; }
 #report-preview h3 { margin:24px 0 12px; }
+#report-preview h4 { font:700 14px/1.5 Arial,sans-serif; letter-spacing:0; margin:18px 0 6px; color:inherit; }
+#report-preview .report-field-group { margin:16px 0; }
+#report-preview .report-table-scroll { overflow-x:auto; max-width:100%; }
+#report-preview .report-summary { width:100%; border-collapse:collapse; white-space:normal; margin:18px 0; font-size:13px; }
+#report-preview .report-summary caption { text-align:left; font-weight:bold; margin-bottom:6px; }
+#report-preview .report-summary th,#report-preview .report-summary td { border:1px solid #aeb9ae; padding:8px; text-align:left; overflow-wrap:normal; }
+#report-preview .report-summary thead { background:#edf2e9; }
 @media(max-width:760px) {
   #excerpt-nav { flex-wrap:nowrap; overflow-x:auto; gap:8px; }
   .excerpt-choice { flex:0 0 220px; }
@@ -123,8 +130,12 @@ button:disabled { cursor:default; opacity:.65; }
   #report-heading { display:none; }
   main { padding:0; max-width:none; }
   #report-preview { border:0; padding:0; font-size:11pt; line-height:1.45; }
-  #report-preview h2,#report-preview h3 { break-after:avoid; }
+  #report-preview h2,#report-preview h3,#report-preview h4 { break-after:avoid; }
   #report-preview p { orphans:3; widows:3; }
+  #report-preview .report-summary { font-size:9pt; break-inside:avoid; }
+  #report-preview .report-table-scroll { overflow:visible; }
+  #report-preview .report-executive-summary,#report-preview .report-field-group { break-inside:avoid; }
+  #report-preview .report-summary th,#report-preview .report-summary td { padding:6px; }
 }
 @media(max-width:1000px) { .review-workspace { grid-template-columns:1fr; } }
 @media(forced-colors:active) { .passage-label { border:1px solid CanvasText; } button,select,textarea,.citation { border-color:CanvasText; } }
