@@ -37,6 +37,46 @@ async function preview() {
 try {
   await page.goto(base);
   await page.getByRole('heading', { name: 'No concern flagged', exact: true }).waitFor();
+  // Help must be keyboard-accessible without rebuilding forms or saving drafts.
+  await page.getByLabel('Excerpt rationale', { exact: true }).fill('UNSAVED HELP TEST');
+  await page.getByLabel('Excerpt decision', { exact: true }).selectOption('Keep');
+  const settings = page.getByRole('button', { name: 'Settings and help', exact: true });
+  await settings.click();
+  const help = page.getByRole('dialog', { name: 'Settings and help', exact: true });
+  await help.waitFor();
+  assert.equal(await settings.getAttribute('aria-expanded'), 'true');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Close');
+  assert.match(await help.innerText(), /No live AI analysis/);
+  assert.equal(await help.locator('details').count(), 8);
+  await page.screenshot({ path: 'work/settings-help-desktop.png' });
+  await page.keyboard.press('Shift+Tab');
+  assert.equal(await page.evaluate(() => document.querySelector('#settings-panel').contains(document.activeElement)), true);
+  await page.keyboard.press('Tab');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Close');
+  await page.keyboard.press('Escape');
+  await help.waitFor({ state: 'hidden' });
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'open-settings');
+  assert.equal(await settings.getAttribute('aria-expanded'), 'false');
+  assert.equal(await page.getByLabel('Excerpt rationale', { exact: true }).inputValue(), 'UNSAVED HELP TEST');
+  assert.equal(await page.getByLabel('Excerpt decision', { exact: true }).inputValue(), 'Keep');
+  assert.equal(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('context-cut:decision:')).length), 0);
+  await settings.click();
+  for (const topic of ['Understanding the transcript', 'Understanding the review', 'Making decisions', 'Moving around', 'Saving and reporting', 'Accessibility', 'Troubleshooting']) {
+    await help.locator('summary').filter({ hasText: new RegExp(`^${topic}$`) }).click();
+  }
+  assert.match(await help.innerText(), /Green means kept, not approved/);
+  assert.match(await help.innerText(), /The finding, evidence and suggested remedy remain in the report/);
+  await page.setViewportSize({ width:390, height:844 });
+  await help.evaluate(node => { node.scrollTop = 0; });
+  assert.equal(await help.evaluate(node => node.scrollWidth <= node.clientWidth), true);
+  await page.screenshot({ path: 'work/settings-help-mobile.png' });
+  await help.getByRole('button', { name:'Close', exact:true }).click();
+  await help.waitFor({ state:'hidden' });
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'open-settings');
+  assert.equal(await page.getByLabel('Excerpt rationale', { exact:true }).inputValue(), 'UNSAVED HELP TEST');
+  await page.setViewportSize({ width:1440, height:1000 });
+  await page.getByLabel('Excerpt rationale', { exact:true }).fill('');
+  await page.getByLabel('Excerpt decision', { exact:true }).selectOption('');
   assert.equal(await page.locator('#transcript .turn').count(), 8);
   for (const excerpt of fixture.excerpts) {
     await selectExcerpt(excerpt.id);
@@ -178,6 +218,8 @@ try {
   await page.getByRole('heading', { name: 'Source reference unavailable' }).waitFor();
   await page.route('**/data/synthetic-interview.json', route => route.fulfill({ status: 500, body: 'unavailable' }));
   await page.reload(); await page.locator('#load-error:not([hidden])').waitFor();
+  await settings.click(); await help.waitFor();
+  await help.getByRole('button', {name:'Close',exact:true}).click();
   assert.equal(await page.getByRole('button', { name: 'Export internal report' }).isDisabled(), true);
   await page.unroute('**/data/synthetic-interview.json');
 
