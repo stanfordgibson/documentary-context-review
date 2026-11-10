@@ -6,7 +6,15 @@ Owner-approved refinements add the Context. Truth. headline; Needs attention / A
 
 `npm test`: **14 passed**, including legacy Resolved-to-Addressed label migration preserving rationale/time and a dismissed finding retaining its authentic remedy. Expanded browser checks passed for focus mode, source/review return navigation, associated excerpt selection, report headings and print invocation. A three-page A4 PDF was generated through Chromium print rendering, rendered to PNG using Poppler and visually inspected. Existing saved-report/download, blocked/stale storage, evidence failure and accessibility checks remain included. This is browser PDF printing, not a separate direct PDF-download service.
 
-GitHub Actions now runs the logic suite for pushes and pull requests. The Sites build allowlists eight fictional browser assets; uploads and live model integration remain deferred. Hosted publication/access verification is recorded separately when complete. No formal assistive-technology user audit has been performed.
+GitHub Actions now runs the logic suite for pushes and pull requests. The Sites build allowlists eight fictional browser assets; uploads and live model integration remain deferred. No formal assistive-technology user audit has been performed.
+
+### Public demonstration and integration
+
+Pull request [#1](https://github.com/stanfordgibson/documentary-context-review/pull/1) passed GitHub Actions and was reviewed and merged into main at `78b673faaaad456645c80610184c8f2639f37ab6`. The capstone is tagged `v0.3.0`.
+
+The owner explicitly authorised public access to the fictional demo. Sites version 1 was successfully deployed at https://context-cut-naledi-demo.codex-certif-9427.chatgpt.site from source-mirror commit `f8a1f907ce247078d02e3bbf12eb065f7c15358f`, which records GitHub source commit `d561ec16d8e435e71c313c58b38ac7eed361a3ad` in PROVENANCE.md. No source code differs from the reviewed GitHub implementation; the deployment archive contains the manifest and eight browser assets only.
+
+A fresh anonymous Chromium context verified public access without sign-in, decision save/reload, focused source mode, kept-passage review navigation, a dismissed finding retaining its suggested remedy, numbered report headings, report download, PDF-print invocation and 390px layout. No uncaught page errors occurred. Browser test decisions were confined to the isolated test browser; no shared records or real transcripts were created.
 
 ## Milestones 2 and 3 — 9 November 2026
 
