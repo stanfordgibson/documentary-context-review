@@ -75,6 +75,8 @@ Private repository: https://github.com/stanfordgibson/documentary-context-review
 
 ## Hosted demonstration
 
+[Primary public MVP demo — Vercel Hobby](https://context-cut-inky.vercel.app/?excerpt=conversation). Deployed on 11 November 2026 using the eight allowlisted static build files. The private GitHub repository remains the source of record. This is a manual static upload; GitHub pushes do not automatically update Vercel. See [deployment verification](docs/DEPLOYMENT.md).
+
 [Context Cut Naledi demo](https://context-cut-naledi-demo.codex-certif-9427.chatgpt.site) is public to anyone with the link, as authorised by the owner. It uses the fictional fixture and browser-local decisions. Local decisions do not transfer to the hosted address, and one visitor's decisions are not shared with others.
 
 GitHub remains the project history. `.openai/hosting.json` identifies the Site; `node scripts/build-site.mjs` prepares only the eight allowlisted browser assets in ignored `dist/`. Sites publication uses a separately versioned source mirror and the build produced from that source. No real transcripts or saved decisions are included.
